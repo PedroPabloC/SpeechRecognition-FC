@@ -1,6 +1,11 @@
 apply plugin: 'com.android.application'
 
 android {
+    packagingOptions {
+        exclude 'META-INF/INDEX.LIST'
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
@@ -12,6 +17,8 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -35,4 +42,7 @@ dependencies {
     //dialogFlow
     implementation 'com.google.cloud:google-cloud-dialogflow:2.1.0'
     implementation 'io.grpc:grpc-okhttp:1.30.0'
+
+    //Dex file error
+    implementation 'com.android.support:multidex:1.0.3'
 }

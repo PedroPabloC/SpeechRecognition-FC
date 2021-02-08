@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements BotReply {
     private void sendMessageToBot(String message) {
         QueryInput input = QueryInput.newBuilder()
                 .setText(TextInput.newBuilder().setText(message).setLanguageCode("es")).build();
-        new SendMessageInBG(this, sessionName, sessionsClient, input);
+        new SendMessageInBG(this, sessionName, sessionsClient, input).execute();
     }
 
 
@@ -113,15 +113,17 @@ public class MainActivity extends AppCompatActivity implements BotReply {
 
         if(returnResponse!=null) {
             String botReply = returnResponse.getQueryResult().getFulfillmentText();
+            mTextView.setText(botReply);
             if(!botReply.isEmpty()){
                 switch (botReply){
                     case "1": {
                         mTextView.setText("Pasar pregunta");
                     }
-
+                    break;
                     case "2": {
                         mTextView.setText("Repetir pregunta");
                     }
+                    break;
                 }
             }else {
                 Toast.makeText(this, "No se ha dicho ningún mensaje", Toast.LENGTH_SHORT).show();
@@ -181,9 +183,10 @@ public class MainActivity extends AppCompatActivity implements BotReply {
 
 
     public void compararRespuesta(String userResult){
-        if(userResult.equals("Respuesta número 1") || userResult.equals("Respuesta número 2")){
+
+        if(userResult.equals("respuesta 1") || userResult.equals("respuesta número dos")){
             respuestaCorrecta();
-        }else if(userResult.equals("Respuesta número 3") || userResult.equals("Respuesta número 4")){
+        }else if(userResult.equals("respuesta número tres") || userResult.equals("Respuesta número cuatro")){
             respuestaCorrecta();
         }else {
             sendMessageToBot(userResult);
@@ -192,6 +195,7 @@ public class MainActivity extends AppCompatActivity implements BotReply {
 
 
     public void respuestaCorrecta(){
+
         mTextView.setText("Respuesta correcta");
     }
 
